@@ -39,11 +39,11 @@ public class Index {
 			socket = new Socket(ip,port);
 			out = new ObjectOutputStream(socket.getOutputStream());
            
-			//根据路径打开指定文档
+			//通知运行中的记事本应用，根据传参打开指定文档
         	if(filePathArray != null && filePathArray.length > 0){
         		out.writeObject(filePathArray);
         	
-        	//新建空白文档
+        	//通知运行中的记事本应用，新建空白文档
         	}else{
         		out.writeObject("new");
         	}
