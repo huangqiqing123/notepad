@@ -404,7 +404,7 @@ public class MyNotePad extends javax.swing.JFrame {
 		//设置jtextArea 与 lineNumber 字体保持一致
     	jTextArea1.setFont((Font)( ConfigUtil.getConfInfo().get(Const.FONT)));
     	jTextArea1.setCodeFoldingEnabled(true);
-    	jTextArea1.setHighlightCurrentLine(false);//设置当前行不高亮
+    	jTextArea1.setHighlightCurrentLine(true);//设置当前行高亮
       
     	
         //菜单
