@@ -135,6 +135,7 @@ public class MyNotePad extends javax.swing.JFrame {
 		if(filePath != null){
 			String[] strArr = DocUtil.getCharDocContent(filePath);
 			jTextArea1.setText(strArr[1]);
+ 			render(filePath);//根据文件后缀，设置语法样式
 			this.encode_status.setText(strArr[2]);
 			
 			//根据文件路径显示文件内容时，如果未指定窗口title，则使用文件路径作为title
@@ -561,89 +562,94 @@ public class MyNotePad extends javax.swing.JFrame {
  			this.status.setText("");
  			
  			//根据文件后缀，设置语法样式
- 			if(path.endsWith(".java")||path.endsWith(".JAVA")){
- 				jTextArea1.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);//设置语言高亮 
- 				syntaxStyle.setSelectedItem("Java");
- 			}else if(path.endsWith(".js")||path.endsWith(".JS")){
- 				jTextArea1.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVASCRIPT);
- 				syntaxStyle.setSelectedItem("JavaScript");
- 			}else if(path.endsWith(".c")||path.endsWith(".C")){
- 				jTextArea1.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_C);
- 				syntaxStyle.setSelectedItem("C");
- 			}else if(path.endsWith(".css")||path.endsWith(".CSS")){
- 				jTextArea1.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_CSS);
- 				syntaxStyle.setSelectedItem("Css");
- 			}else if(path.endsWith(".csv")||path.endsWith(".CSV")){
- 				jTextArea1.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_CSV);
- 				syntaxStyle.setSelectedItem("Csv");
- 			}else if(path.endsWith(".dtd")||path.endsWith(".DTD")){
- 				jTextArea1.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_DTD);
- 				syntaxStyle.setSelectedItem("Dtd");
- 			}else if(path.endsWith(".dockerfile")||path.endsWith(".DOCKERFILE")){
- 				jTextArea1.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_DOCKERFILE);
- 				syntaxStyle.setSelectedItem("Dockerfile");
- 			}else if(path.endsWith(".go")||path.endsWith(".GO")){
- 				jTextArea1.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_GO);
- 				syntaxStyle.setSelectedItem("GO");
- 			}else if(path.endsWith(".groovy")||path.endsWith(".GROOVY")){
- 				jTextArea1.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_GROOVY);
- 				syntaxStyle.setSelectedItem("Groovy");
- 			}else if(path.endsWith(".html")||path.endsWith(".HTML")){
- 				jTextArea1.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_HTML);
- 				syntaxStyle.setSelectedItem("Html");
- 			}else if(path.endsWith(".hosts")||path.endsWith(".HOSTS")|| (path.substring(path.lastIndexOf("\\")+1)).equalsIgnoreCase("hosts")){
- 				jTextArea1.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_HOSTS);
- 				syntaxStyle.setSelectedItem("Hosts");
- 			}else if(path.endsWith(".ini")||path.endsWith(".INI")){
- 				jTextArea1.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_INI);
- 				syntaxStyle.setSelectedItem("Ini");
- 			}else if(path.endsWith(".jsp")||path.endsWith(".JSP")){
- 				jTextArea1.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JSP);
- 				syntaxStyle.setSelectedItem("Jsp");
- 			}else if(path.endsWith(".json")||path.endsWith(".JSON")){
- 				jTextArea1.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JSON_WITH_COMMENTS);
- 				syntaxStyle.setSelectedItem("Json");
- 			}else if(path.endsWith(".lua")||path.endsWith(".LUA")){
- 				jTextArea1.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_LUA);
- 				syntaxStyle.setSelectedItem("Lua");
- 			}else if(path.endsWith(".md")||path.endsWith(".MD")){
- 				jTextArea1.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_MARKDOWN);
- 				syntaxStyle.setSelectedItem("Markdown");
- 			}else if(path.endsWith(".php")||path.endsWith(".PHP")){
- 				jTextArea1.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_PHP);
- 				syntaxStyle.setSelectedItem("Php");
- 			}else if(path.endsWith(".perl")||path.endsWith(".PERL")){
- 				jTextArea1.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_PERL);
- 				syntaxStyle.setSelectedItem("Perl");
- 			}else if(path.endsWith(".properties")||path.endsWith(".PROPERTIES")||path.endsWith(".conf")||path.endsWith(".CONF")){
- 				jTextArea1.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_PROPERTIES_FILE);
- 				syntaxStyle.setSelectedItem("Properties");
- 			}else if(path.endsWith(".py")||path.endsWith(".PY")){
- 				jTextArea1.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_PYTHON);
- 				syntaxStyle.setSelectedItem("Python");
- 			}else if(path.endsWith(".rb")||path.endsWith(".RB")){
- 				jTextArea1.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_RUBY);
- 				syntaxStyle.setSelectedItem("Ruby");
- 			}else if(path.endsWith(".sql")||path.endsWith(".SQL")){
- 				jTextArea1.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_SQL);
- 				syntaxStyle.setSelectedItem("SQL");
- 			}else if(path.endsWith(".sh")||path.endsWith(".SH")){
- 				jTextArea1.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_UNIX_SHELL);
- 				syntaxStyle.setSelectedItem("Shell");
- 			}else if(path.endsWith(".xml")||path.endsWith(".XML")){
- 				jTextArea1.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_XML);
- 				syntaxStyle.setSelectedItem("Xml");
- 			}else if(path.endsWith(".yaml")||path.endsWith(".YAML")||path.endsWith(".yml")||path.endsWith(".YML")){
- 				jTextArea1.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_YAML);
- 				syntaxStyle.setSelectedItem("Yaml");
- 			}else{
- 				jTextArea1.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_NONE);
- 				syntaxStyle.setSelectedItem("Text");
- 			}
+ 			render(path);
  			
  			//新打开文档，textIsChanged重置为false
  			jTextArea1.textIsChanged = false;
  		}
+     }
+     
+     public void render(String path){
+    	//根据文件后缀，设置语法样式
+		if(path.endsWith(".java")||path.endsWith(".JAVA")){
+			jTextArea1.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);//设置语言高亮 
+			syntaxStyle.setSelectedItem("Java");
+		}else if(path.endsWith(".js")||path.endsWith(".JS")){
+			jTextArea1.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVASCRIPT);
+			syntaxStyle.setSelectedItem("JavaScript");
+		}else if(path.endsWith(".c")||path.endsWith(".C")){
+			jTextArea1.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_C);
+			syntaxStyle.setSelectedItem("C");
+		}else if(path.endsWith(".css")||path.endsWith(".CSS")){
+			jTextArea1.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_CSS);
+			syntaxStyle.setSelectedItem("Css");
+		}else if(path.endsWith(".csv")||path.endsWith(".CSV")){
+			jTextArea1.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_CSV);
+			syntaxStyle.setSelectedItem("Csv");
+		}else if(path.endsWith(".dtd")||path.endsWith(".DTD")){
+			jTextArea1.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_DTD);
+			syntaxStyle.setSelectedItem("Dtd");
+		}else if(path.endsWith(".dockerfile")||path.endsWith(".DOCKERFILE")){
+			jTextArea1.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_DOCKERFILE);
+			syntaxStyle.setSelectedItem("Dockerfile");
+		}else if(path.endsWith(".go")||path.endsWith(".GO")){
+			jTextArea1.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_GO);
+			syntaxStyle.setSelectedItem("GO");
+		}else if(path.endsWith(".groovy")||path.endsWith(".GROOVY")){
+			jTextArea1.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_GROOVY);
+			syntaxStyle.setSelectedItem("Groovy");
+		}else if(path.endsWith(".html")||path.endsWith(".HTML")){
+			jTextArea1.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_HTML);
+			syntaxStyle.setSelectedItem("Html");
+		}else if(path.endsWith(".hosts")||path.endsWith(".HOSTS")|| (path.substring(path.lastIndexOf("\\")+1)).equalsIgnoreCase("hosts")){
+			jTextArea1.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_HOSTS);
+			syntaxStyle.setSelectedItem("Hosts");
+		}else if(path.endsWith(".ini")||path.endsWith(".INI")){
+			jTextArea1.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_INI);
+			syntaxStyle.setSelectedItem("Ini");
+		}else if(path.endsWith(".jsp")||path.endsWith(".JSP")){
+			jTextArea1.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JSP);
+			syntaxStyle.setSelectedItem("Jsp");
+		}else if(path.endsWith(".json")||path.endsWith(".JSON")){
+			jTextArea1.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JSON_WITH_COMMENTS);
+			syntaxStyle.setSelectedItem("Json");
+		}else if(path.endsWith(".lua")||path.endsWith(".LUA")){
+			jTextArea1.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_LUA);
+			syntaxStyle.setSelectedItem("Lua");
+		}else if(path.endsWith(".md")||path.endsWith(".MD")){
+			jTextArea1.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_MARKDOWN);
+			syntaxStyle.setSelectedItem("Markdown");
+		}else if(path.endsWith(".php")||path.endsWith(".PHP")){
+			jTextArea1.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_PHP);
+			syntaxStyle.setSelectedItem("Php");
+		}else if(path.endsWith(".perl")||path.endsWith(".PERL")){
+			jTextArea1.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_PERL);
+			syntaxStyle.setSelectedItem("Perl");
+		}else if(path.endsWith(".properties")||path.endsWith(".PROPERTIES")||path.endsWith(".conf")||path.endsWith(".CONF")){
+			jTextArea1.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_PROPERTIES_FILE);
+			syntaxStyle.setSelectedItem("Properties");
+		}else if(path.endsWith(".py")||path.endsWith(".PY")){
+			jTextArea1.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_PYTHON);
+			syntaxStyle.setSelectedItem("Python");
+		}else if(path.endsWith(".rb")||path.endsWith(".RB")){
+			jTextArea1.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_RUBY);
+			syntaxStyle.setSelectedItem("Ruby");
+		}else if(path.endsWith(".sql")||path.endsWith(".SQL")){
+			jTextArea1.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_SQL);
+			syntaxStyle.setSelectedItem("SQL");
+		}else if(path.endsWith(".sh")||path.endsWith(".SH")){
+			jTextArea1.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_UNIX_SHELL);
+			syntaxStyle.setSelectedItem("Shell");
+		}else if(path.endsWith(".xml")||path.endsWith(".XML")){
+			jTextArea1.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_XML);
+			syntaxStyle.setSelectedItem("Xml");
+		}else if(path.endsWith(".yaml")||path.endsWith(".YAML")||path.endsWith(".yml")||path.endsWith(".YML")){
+			jTextArea1.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_YAML);
+			syntaxStyle.setSelectedItem("Yaml");
+		}else{
+			jTextArea1.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_NONE);
+			syntaxStyle.setSelectedItem("Text");
+		}
      }
      
     /**
@@ -729,7 +735,7 @@ public class MyNotePad extends javax.swing.JFrame {
      * @return
      */
     public String time(){
-    	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    	SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
     	//如果不指定时区，在有些机器上会出现时间误差。  
 		sdf.setTimeZone(TimeZone.getTimeZone("GMT+8"));
 		return sdf.format(new Date());
