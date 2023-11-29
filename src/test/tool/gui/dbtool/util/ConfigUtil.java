@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Hashtable;
+
 import org.apache.log4j.Logger;
 
 import test.tool.gui.common.SysFontAndFace;
@@ -33,7 +34,7 @@ public class ConfigUtil {
 
 		ObjectOutputStream oops = null;
 		try {
-			oops = new ObjectOutputStream(new FileOutputStream(Const.CONF_PATH));
+			oops = new ObjectOutputStream(new FileOutputStream(System.getenv("TEMP")+"/"+Const.CONF_PATH));
 			oops.writeObject(getConfInfo());
 		} catch (Exception e) {
 			log.error("更新配置文件出错！",e);
@@ -53,7 +54,7 @@ public class ConfigUtil {
 	private static Hashtable<String,Object> loadConfInfo(){
 		ObjectInputStream oips = null;
 		try {
-			File file = new File(Const.CONF_PATH);
+			File file = new File(System.getenv("TEMP")+"/"+Const.CONF_PATH);
 			if(file.exists()){		
 				oips = new ObjectInputStream(new FileInputStream(file));
 				conf_table=(Hashtable<String,Object>)oips.readObject();

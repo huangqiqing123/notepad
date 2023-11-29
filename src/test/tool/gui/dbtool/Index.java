@@ -19,7 +19,6 @@ import test.tool.gui.dbtool.frame.MyNotePad;
 
 public class Index {
 
-	private static Logger log = null;
 	/*
 	 * 程序入口
 	 */
@@ -56,27 +55,16 @@ public class Index {
         
 		} catch (Exception e) {
 			//-----------抛异常说明记事本程序尚未启动-------------
-			//1、================初始化日志=================
-			log = Logger.getLogger(Index.class);
-			log.debug("启动");
 			
-			// 2、================验证应用程序同级目录下，log文件夹是否存在，如果不存在，则创建。================
-			File file_log = new File("log");
-			if (!file_log.exists() || !file_log.isDirectory()) {
-				if (!file_log.mkdirs()) {
-					JOptionPane.showMessageDialog(null, "创建log目录失败！");
-					System.exit(0);
-				}
-			}
-			// 3、================验证应用程序同级目录下，config文件夹是否存在，如果不存在，则创建。================
-			File file_config = new File("config");
+			// 1、================验证应用程序同级目录下，config文件夹是否存在，如果不存在，则创建。================
+			File file_config = new File(System.getenv("TEMP")+"/config");
 			if (!file_config.exists() || !file_config.isDirectory()) {
 				if (!file_config.mkdirs()) {
 					JOptionPane.showMessageDialog(null, "创建config目录失败！");
 					System.exit(0);
 				}
 			}
-        	//4、================新启线程，监听socket连接================
+        	//2、================新启线程，监听socket连接================
 			new Thread(){
 				@Override
 				public void run() {
@@ -96,12 +84,12 @@ public class Index {
 			                try {
 								 serverIn.close();
 							} catch (IOException e) {
-								log.error(null, e);
+								e.printStackTrace();
 							}
 							try {
 								clientSocket.close();
 							} catch (Exception e) {
-								log.error(null, e);
+								e.printStackTrace();
 							}
 		            		
 		            		//如果客户端发送的信息是 new ，则新建空白文档
@@ -128,13 +116,13 @@ public class Index {
 			                }
 						}
 					} catch (Exception e2) {
-						log.error(null, e2);
+						e2.printStackTrace();
 					}
 				}
 			}.start();
 		}
 
-		//5、================启动记事本程序================
+		//3、================启动记事本程序================
 		// 设置系统字体
 		SysFontAndFace.setSysFontAndFace();
 
@@ -168,7 +156,7 @@ public class Index {
 			System.exit(1);
 		}
 		
-		//6、================启动定时任务，负责执行gc================
+		//4、================启动定时任务，负责执行gc================
 		//创建定时器，一分钟后开始执行，以后每分钟执行一次。
 		Timer timer = new Timer();
 		timer.schedule(new TimerTask(){
@@ -179,7 +167,7 @@ public class Index {
 			
 		}, 60*1000,60*1000);
 
-		// 7、================关闭欢迎信息================
+		// 5、================关闭欢迎信息================
 		SplashScreen ss = SplashScreen.getSplashScreen();
 		if (ss != null) {
 			ss.close();

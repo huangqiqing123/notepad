@@ -37,6 +37,7 @@ import test.tool.gui.dbtool.frame.MyNotePad;
 import test.tool.gui.dbtool.image.ImageIcons;
 import test.tool.gui.dbtool.util.ConfigUtil;
 import test.tool.gui.dbtool.util.DocUtil;
+import test.tool.gui.dbtool.util.WindowsShortcut;
 
 /*
  * 重写JTextArea，实现复制、粘贴、剪切、撤销、恢复 功能
@@ -259,6 +260,7 @@ public class MyJextAreaColor extends RSyntaxTextArea implements DropTargetListen
 		DataFlavor[] flavors = transferable.getTransferDataFlavors();
 		for (int i = 0; i < flavors.length; i++) {
 			DataFlavor d = flavors[i];
+			
 			//拖放文件
 			if (d.equals(DataFlavor.javaFileListFlavor)) {
 				List<File> fileList = null;
@@ -269,6 +271,11 @@ public class MyJextAreaColor extends RSyntaxTextArea implements DropTargetListen
 						//一次性拖放多个文件时，只读取第一个文件的内容。
 						//如果拖放的是文件夹
 						String path = fileList.get(0).getAbsolutePath();
+						if(path.endsWith(".lnk")){
+							WindowsShortcut shortCut = new WindowsShortcut(new File(path));
+							path = shortCut.getWorkingDirectory() + File.separator + path.substring(path.lastIndexOf(File.separator)+1, path.lastIndexOf(".lnk"));
+						}
+						
 						if(fileList.get(0).isDirectory()){
 							
 							//如果当前文本域关联对象是记事本，则弹出打开对话框
@@ -380,7 +387,7 @@ public class MyJextAreaColor extends RSyntaxTextArea implements DropTargetListen
 				}catch (Exception e) {
 					log.error(null, e);
 				}
-			//拖放文本(追加)
+			//拖放文本(追加),从其他打开的文本编辑器中，选中一段文本，拖放到当前编辑器中。
 			}else if(d.equals(DataFlavor.stringFlavor)){
 				try {
 					this.append((String) transferable.getTransferData(d));
